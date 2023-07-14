@@ -27,14 +27,21 @@ Console.Write("\nPlease enter the number of Guids x 1,000 to enter into the list
     }
 } while (!wasSuccessfullInParsing);
 
-
-
 // Add the Guids to the list and hashSet
 Console.WriteLine($"Adding {numberOfGuids} guids to both the hashset and to the list.");
 
+
 for (int guidIndex = 0; guidIndex < numberOfGuids; guidIndex++)
 {
-    Guid
+    Guid guid = Guid.NewGuid();
+    guidList.Add(guid);
+    guidSet.Add(guid);
+
+    // We want to simulate the worst case for both to properly test the edge case. That would be the last Guid in the List.
+    if ((guidIndex + 1) == numberOfGuids)
+    {
+        guidToSearchFor = guid;
+    }
 }
 
 Console.WriteLine("Finished writing guids.");
@@ -59,7 +66,7 @@ async Task SearchHashSetTenThousandTimes()
     }
     Console.WriteLine("HashSet Wins!");
 }
-
-SearchListTenThousandTimes();
-SearchHashSetTenThousandTimes();
+List<Task> taskList = new List<Task>();
+ SearchListTenThousandTimes();
+await SearchHashSetTenThousandTimes();
 
